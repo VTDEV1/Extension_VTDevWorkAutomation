@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<module>
+	<version>1.2.0</version>
+	<type>extension</type>
+	<name>WorkAutomations</name>
+	<label>Work_Automations</label>
+	<dependencies>
+		<vtiger_version>7.0.0</vtiger_version>
+		<vtiger_max_version>7.*</vtiger_max_version>
+	</dependencies>
+	<license>
+		<file>License.txt</file>
+	</license>
+	<tables>
+		<table>
+			<name>vtdev_modules</name>
+			<sql><![CDATA[CREATE TABLE IF NOT EXISTS `vtdev_modules` (
+				`module`  varchar(50) NOT NULL ,
+				`valid`  int(1) NULL ,
+				PRIMARY KEY (`module`));]]></sql>
+		</table>
+		<table>
+			<name>vtdev_work_automations_settings</name>
+			<sql><![CDATA[CREATE TABLE IF NOT EXISTS `vtdev_work_automations_settings` (
+				`id` INT NOT NULL AUTO_INCREMENT,
+				`enable` INT,
+				PRIMARY KEY (`id`));]]></sql>
+		</table>
+		<table>
+			<name>vtdev_work_automations_settings</name>
+			<sql><![CDATA[INSERT INTO `vtdev_work_automations_settings` (`enable`) VALUES (1);]]></sql>
+		</table>
+		<table>
+			<name>vtdev_work_automations_template</name>
+			<sql><![CDATA[CREATE TABLE IF NOT EXISTS `vtdev_work_automations_template` (
+				`template_id` INT NOT NULL AUTO_INCREMENT,
+				`template_name` VARCHAR(500),
+				`template_parent_module` VARCHAR(200),
+				`template_related_module` VARCHAR(200),
+				`template_block_field_info` VARCHAR(2000),
+				PRIMARY KEY (`template_id`));]]></sql>
+		</table>
+	</tables>
+	<sharingaccess>
+		<default>Public_ReadWriteDelete</default>
+	</sharingaccess>
+</module>
