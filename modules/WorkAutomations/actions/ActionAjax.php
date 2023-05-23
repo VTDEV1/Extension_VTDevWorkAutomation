@@ -17,8 +17,8 @@ class WorkAutomations_ActionAjax_Action extends Vtiger_Action_Controller {
         parent::__construct();
         $this->exposeMethod('SaveTemplate');
         $this->exposeMethod('DeleteTemplate');
-        $this->exposeMethod('getTemplates');
-        $this->exposeMethod('createRelatedRecords');
+        $this->exposeMethod('GetTemplates');
+        $this->exposeMethod('CreateRelatedRecords');
         $this->exposeMethod('GetOrganizationInfo');
     }
 
@@ -29,21 +29,25 @@ class WorkAutomations_ActionAjax_Action extends Vtiger_Action_Controller {
             return;
         }
     }
-    function getTemplates(Vtiger_Request $request){
+    function GetTemplates(Vtiger_Request $request){
         global $adb;
         $parentModule = $request->get('parent_module');
         $arrTemplates = array();
-        $result = $adb->pquery('SELECT * FROM vtdev_work_automations_template WHERE template_parent_module = ? ', array($parentModule));
-        if ($adb->num_rows($result) > 0) {
-            $arrTemplates['template_id'] = $adb->query_result($result, 0, 'template_id');
-            $arrTemplates['template_name'] = $adb->query_result($result, 0, 'template_name');
+        $results = $adb->pquery('SELECT * FROM vtdev_work_automations_template WHERE template_parent_module = ? ', array($parentModule));
+        if ($adb->num_rows($results) > 0) {
+            while ($row = $adb->fetchByAssoc($results)){
+                $arrayData = array();
+                $arrayData['template_id'] = $row['template_id'];
+                $arrayData['template_name'] = $row['template_name'];
+                array_push($arrTemplates, $arrayData);
+            }
         }
         $response = new Vtiger_Response();
         $response->setEmitType(Vtiger_Response::$EMIT_JSON);
-        $response->setResult(array($arrTemplates));
+        $response->setResult($arrTemplates);
         $response->emit();
     }
-    function createRelatedRecords(Vtiger_Request $request) {
+    function CreateRelatedRecords(Vtiger_Request $request) {
         global $adb;
         $parentModuleName = $request->get('parent_module');
         $templateId = $request->get('template_id');
@@ -62,25 +66,6 @@ class WorkAutomations_ActionAjax_Action extends Vtiger_Action_Controller {
                 foreach ($arrBlocks as $arrFields) {
                     $newRecord = Vtiger_Record_Model::getCleanInstance($relatedModuleName);
                     foreach ($arrFields as $fieldName => $fieldValue) {
-                        switch (strtolower($fieldValue)){
-                            case 'today':
-                                $fieldValue = date('Y-m-d');
-                                break;
-                            case 'tomorrow':
-                                $fieldValue = date('Y-m-d',strtotime("+1 days"));
-                                break;
-                            case 'yesterday':
-                                $fieldValue = date('Y-m-d',strtotime("-1 days"));
-                                break;
-                            case 'nextmonth':
-                                $fieldValue = date('Y-m-d',strtotime("+1 months"));
-                                break;
-                            case 'lastmonth':
-                                $fieldValue = date('Y-m-d',strtotime("-1 months"));
-                                break;
-                            default:
-                                break;
-                        }
                         $newRecord->set($fieldName, $fieldValue);
                     }
                     $newRecord->save();
@@ -112,17 +97,17 @@ class WorkAutomations_ActionAjax_Action extends Vtiger_Action_Controller {
         $template = $request->get('template');
         if($parentModuleName && $relatedModuleName && $template){
             $rebuild_blocks = array();
-            // $relModuleModel = Vtiger_Module_Model::getInstance($relatedModuleName);
+            $relModuleModel = Vtiger_Module_Model::getInstance($relatedModuleName);
             foreach ($template as $block){
                 $rebuild_fields = [];
                 foreach ($block as $fields){
                     foreach ($fields as $field){
                         foreach ($field as $name=>$val){
-                            /* $fieldModel = Vtiger_Field_Model::getInstance($name,$relModuleModel);
+                            $fieldModel = Vtiger_Field_Model::getInstance($name,$relModuleModel);
                             $fieldDataType = $fieldModel->getFieldDataType();
                             if($fieldDataType == 'date'){
                                 $val = Vtiger_Date_UIType::getDBInsertedValue($val);
-                            } */
+                            }
                             $rebuild_fields[$name]=$val;
                         }
                     }

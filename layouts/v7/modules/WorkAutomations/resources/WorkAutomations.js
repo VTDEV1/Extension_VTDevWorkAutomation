@@ -14,7 +14,7 @@ Vtiger.Class("WorkAutomations_Js",{
         var params = {};
         params.module = 'WorkAutomations';
         params.action = 'ActionAjax';
-        params.mode = 'getTemplates';
+        params.mode = 'GetTemplates';
         params.parent_module = parentModuleName;
         app.request.post({ data: params }).then(
             function (err, data) {
@@ -78,7 +78,7 @@ Vtiger.Class("WorkAutomations_Js",{
                 var params = {};
                 params.module = 'WorkAutomations';
                 params.action = 'ActionAjax';
-                params.mode = 'createRelatedRecords';
+                params.mode = 'CreateRelatedRecords';
                 params.parent_module = parentModuleName;
                 params.template_id = selectedTemplateId;
                 params.record = recordId;
