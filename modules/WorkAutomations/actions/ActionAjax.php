@@ -66,6 +66,25 @@ class WorkAutomations_ActionAjax_Action extends Vtiger_Action_Controller {
                 foreach ($arrBlocks as $arrFields) {
                     $newRecord = Vtiger_Record_Model::getCleanInstance($relatedModuleName);
                     foreach ($arrFields as $fieldName => $fieldValue) {
+                        switch (strtolower($fieldValue)){
+                            case 'today':
+                                $fieldValue = date('Y-m-d');
+                                break;
+                            case 'tomorrow':
+                                $fieldValue = date('Y-m-d',strtotime("+1 days"));
+                                break;
+                            case 'yesterday':
+                                $fieldValue = date('Y-m-d',strtotime("-1 days"));
+                                break;
+                            case 'nextmonth':
+                                $fieldValue = date('Y-m-d',strtotime("+1 months"));
+                                break;
+                            case 'lastmonth':
+                                $fieldValue = date('Y-m-d',strtotime("-1 months"));
+                                break;
+                            default:
+                                break;
+                        }
                         $newRecord->set($fieldName, $fieldValue);
                     }
                     $newRecord->save();
@@ -97,17 +116,17 @@ class WorkAutomations_ActionAjax_Action extends Vtiger_Action_Controller {
         $template = $request->get('template');
         if($parentModuleName && $relatedModuleName && $template){
             $rebuild_blocks = array();
-            $relModuleModel = Vtiger_Module_Model::getInstance($relatedModuleName);
+            // $relModuleModel = Vtiger_Module_Model::getInstance($relatedModuleName);
             foreach ($template as $block){
                 $rebuild_fields = [];
                 foreach ($block as $fields){
                     foreach ($fields as $field){
                         foreach ($field as $name=>$val){
-                            $fieldModel = Vtiger_Field_Model::getInstance($name,$relModuleModel);
+                            /* $fieldModel = Vtiger_Field_Model::getInstance($name,$relModuleModel);
                             $fieldDataType = $fieldModel->getFieldDataType();
                             if($fieldDataType == 'date'){
                                 $val = Vtiger_Date_UIType::getDBInsertedValue($val);
-                            }
+                            } */
                             $rebuild_fields[$name]=$val;
                         }
                     }
