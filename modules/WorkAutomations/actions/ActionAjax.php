@@ -15,13 +15,19 @@ class WorkAutomations_ActionAjax_Action extends Vtiger_Action_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->vtdevLicense();
         $this->exposeMethod('SaveTemplate');
         $this->exposeMethod('DeleteTemplate');
         $this->exposeMethod('GetTemplates');
         $this->exposeMethod('CreateRelatedRecords');
         $this->exposeMethod('GetOrganizationInfo');
     }
-
+    function vtdevLicense() {
+        $vTELicense = WorkAutomations_VTDEVLicense_Model::validate();
+        if(!$vTELicense['valid']){
+            header("Location: index.php?module=WorkAutomations&parent=Settings&view=Settings&mode=showVtdevStoreRequireScreen");
+        }
+    }
     function process(Vtiger_Request $request) {
         $mode = $request->get('mode');
         if(!empty($mode)) {

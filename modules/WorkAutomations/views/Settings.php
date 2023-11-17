@@ -12,8 +12,29 @@ class WorkAutomations_Settings_View extends Settings_Vtiger_Index_View {
         parent::__construct();
     }
     public function process(Vtiger_Request $request) {
-        $this->renderSettingsUI($request);
+        $vtdevLicense = WorkAutomations_VTDEVLicense_Model::validate();
+        if(!$vtdevLicense['valid']) $this->showVtdevStoreRequireScreen($request,$vtdevLicense);
+        else{
+            $mode = $request->getMode();
+            if ($mode) {
+                $this->$mode($request);
+            } else {
+                $this->renderSettingsUI($request);
+            }
+        }
     }
+
+    function showVtdevStoreRequireScreen(Vtiger_Request $request, $vtdevLicense) {
+        global $site_URL;
+        $module = $request->getModule();
+        $viewer = $this->getViewer($request);
+
+        $viewer->assign('VTDEVLICENSE', $vtdevLicense);
+        $viewer->assign('SITE_URL', $site_URL);
+        $viewer->assign('QUALIFIED_MODULE', $module);
+        $viewer->view('VtdevStoreRequire.tpl', $module);
+    }
+
     function renderSettingsUI(Vtiger_Request $request) {
         $module = $request->getModule();
         $viewer = $this->getViewer($request);
