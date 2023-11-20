@@ -12,7 +12,7 @@
 
             <div class="row">
                 <label>
-                    <strong>{vtranslate('LBL_WELCOME',$QUALIFIED_MODULE)} {vtranslate('MODULE_LBL',$QUALIFIED_MODULE)} {vtranslate('LBL_INSTALLATION_WIZARD',$QUALIFIED_MODULE)}</strong>
+                    <strong>{vtranslate('Thank you for choosing the VTDevComments extension',$QUALIFIED_MODULE)}</strong>
                 </label>
             </div>
             <div class="clearfix">&nbsp;</div>
@@ -43,7 +43,7 @@
 
 
             <div class="row">
-                <div><span>{vtranslate('LBL_HAVE_TROUBLE',$QUALIFIED_MODULE)} {vtranslate('LBL_CONTACT_US',$QUALIFIED_MODULE)}</span></div>
+                <div><span>{vtranslate('if you encounter any problems while installing extensions,',$QUALIFIED_MODULE)} {vtranslate('please Contact Us!',$QUALIFIED_MODULE)}</span></div>
             </div>
             <div class="row">
                 <ul style="padding-left: 10px;">
@@ -57,14 +57,14 @@
             <div class="row">
                 <center>
                     {if $VTDEVLICENSE['notInstalled']}
-                        <a href="https://vtdevsolutions.com/download/vtdevstore.zip" download>Download VTDEVStore extension now</a>
+                        <a href="https://vtdevsolutions.com/Extensions/Stable_Zip/VTDEVStore.zip" download>Download VTDEVStore extension now</a>
                     {else}
                         <a href="index.php?module=VTDEVStore&parent=Settings&view=Settings">Active VTDEVStore extension</a>
                     {/if}
                 </center>
             </div>
-        </div>
-        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
     </form>
-</div>
+    </div>
 {/strip}
