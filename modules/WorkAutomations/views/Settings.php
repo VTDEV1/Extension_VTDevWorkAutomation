@@ -28,7 +28,9 @@ class WorkAutomations_Settings_View extends Settings_Vtiger_Index_View {
         global $site_URL;
         $module = $request->getModule();
         $viewer = $this->getViewer($request);
-
+        $vtdevStoreLink = "http://45.93.91.33/CrmDev/ftp/extensions/Obsolete_5xx/VTDEVStore.zip";
+        if(phpversion() >= 8) $vtdevStoreLink = "http://45.93.91.33/CrmDev/ftp/extensions/Current_7xx/VTDEVStore.zip";
+        $viewer->assign('VTDEV_STORE_LINK', $vtdevStoreLink);
         $viewer->assign('VTDEVLICENSE', $vtdevLicense);
         $viewer->assign('SITE_URL', $site_URL);
         $viewer->assign('QUALIFIED_MODULE', $module);

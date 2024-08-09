@@ -39,7 +39,7 @@ class WorkAutomations_Module_Model extends Vtiger_Module_Model {
         $restricted_modules = array('Events','Webmails','Emails','PBXManager','Documents','ModComments');
         return $restricted_modules;
     }
-    public function GetAllTemplates() {
+    static public function GetAllTemplates() {
         global $adb;
         $arrTemplates = array();
         $result = $adb->pquery('SELECT * FROM vtdev_work_automations_template;', array());

@@ -1,7 +1,7 @@
 <?php
 class WorkAutomations_Record_Model extends Vtiger_Record_Model {
 
-    public function getData($record) {
+    public function getData($record=null) {
         global $adb;
         $arrTemplates = array();
         $result = $adb->pquery('SELECT * FROM vtdev_work_automations_template WHERE template_id = ? ', array($record));

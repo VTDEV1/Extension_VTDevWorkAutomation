@@ -7,6 +7,7 @@
  * Portions created by vtigerdev.com. are Copyright(C) vtigerdev.com.
  * All Rights Reserved.
  * ****************************************************************************** */
+ 
 class WorkAutomations_ActionAjax_Action extends Vtiger_Action_Controller {
 
     function checkPermission(Vtiger_Request $request) {

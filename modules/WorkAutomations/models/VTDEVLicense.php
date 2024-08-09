@@ -8,9 +8,9 @@
  * ****************************************************************************** */
 class WorkAutomations_VTDEVLicense_Model {
     public static function validate() {
-        if(!class_exists('VTDEVStore_VTDEVModule_Model')) $result =  array('valid'=>false,"notInstalled"=> true,"message" => "VTEDEV Extension was not installed");
+        if(!class_exists('VTDEVStore_Module_Model')) $result =  array('valid'=>false,"notInstalled"=> true,"message" => "VTEDEV Extension was not installed");
         else{
-            $modelInstance = new VTDEVStore_VTDEVModule_Model();
+            $modelInstance = new VTDEVStore_Module_Model();
             $license = $modelInstance->checkLicense();
             if(!$license['result']){
                 if($license['detail'] == "NOT_INIT"){

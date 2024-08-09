@@ -6,7 +6,6 @@
  * Portions created by vtigerdev.com. are Copyright(C) vtigerdev.com.
  * All Rights Reserved.
  * ****************************************************************************** */
-
 class WorkAutomations_Edit_View extends Vtiger_Edit_View {
 
     public function checkPermission(Vtiger_Request $request) {
@@ -17,7 +16,8 @@ class WorkAutomations_Edit_View extends Vtiger_Edit_View {
     }
 
     public function process(Vtiger_Request $request) {
-        global $adb;
+        $vtdevLicense = WorkAutomations_VTDEVLicense_Model::validate();
+        if(!$vtdevLicense['valid']) header('Location: index.php?module=WorkAutomations&parent=Settings&view=Settings&mode=showVtdevStoreRequireScreen');
         $WorkAutomations_Module_Model = new WorkAutomations_Module_Model();
         $WorkAutomations_Record_Model = new WorkAutomations_Record_Model();
         $module = $request->getModule();

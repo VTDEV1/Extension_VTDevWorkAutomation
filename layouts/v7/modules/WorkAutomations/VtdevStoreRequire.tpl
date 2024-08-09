@@ -12,7 +12,7 @@
 
             <div class="row">
                 <label>
-                    <strong>{vtranslate('Thank you for choosing the VTDevComments extension',$QUALIFIED_MODULE)}</strong>
+                    <strong>{vtranslate('Thank you for choosing the WorkAutomations extension',$QUALIFIED_MODULE)}</strong>
                 </label>
             </div>
             <div class="clearfix">&nbsp;</div>
@@ -57,7 +57,7 @@
             <div class="row">
                 <center>
                     {if $VTDEVLICENSE['notInstalled']}
-                        <a href="https://vtdevsolutions.com/Extensions/Stable_Zip/VTDEVStore.zip" download>Download VTDEVStore extension now</a>
+                        <a href="{$VTDEV_STORE_LINK}" download>Download VTDEVStore extension now</a>
                     {else}
                         <a href="index.php?module=VTDEVStore&parent=Settings&view=Settings">Active VTDEVStore extension</a>
                     {/if}
